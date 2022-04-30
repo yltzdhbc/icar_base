@@ -445,64 +445,6 @@ bool calcOdometry(double diff_time)
   return true;
 }
 
-// /************************************ Calculate ******************************************/
-// bool calcOdometry(double diff_time)
-// {
-//   float *orientation;
-//   double wheel_l, wheel_r; // rotation value of wheel [rad]
-//   double delta_s, theta, delta_theta;
-//   static double last_theta = 0.0;
-//   double v, w; // v = translational velocity [m/s], w = rotational velocity [rad/s]
-//   double step_time;
-
-//   wheel_l = wheel_r = 0.0;
-//   delta_s = delta_theta = theta = 0.0;
-//   v = w = 0.0;
-//   step_time = 0.0;
-
-//   step_time = diff_time;
-
-//   if (step_time == 0)
-//     return false;
-
-//   wheel_l = TICK2RAD * (double)last_diff_tick[LEFT];
-//   wheel_r = TICK2RAD * (double)last_diff_tick[RIGHT];
-
-//   if (isnan(wheel_l))
-//     wheel_l = 0.0;
-
-//   if (isnan(wheel_r))
-//     wheel_r = 0.0;
-
-//   delta_s = WHEEL_RADIUS * (wheel_r + wheel_l) / 2.0;
-//   theta = WHEEL_RADIUS * (wheel_r - wheel_l) / WHEEL_SEPARATION;
-//   // orientation = sensors.getOrientation();
-//   // theta = atan2f(orientation[1] * orientation[2] + orientation[0] * orientation[3],
-//   //                0.5f - orientation[2] * orientation[2] - orientation[3] * orientation[3]);
-
-//   delta_theta = theta - last_theta;
-
-//   // compute odometric pose
-//   odom_pose[0] += delta_s * cos(odom_pose[2] + (delta_theta / 2.0));
-//   odom_pose[1] += delta_s * sin(odom_pose[2] + (delta_theta / 2.0));
-//   odom_pose[2] += delta_theta;
-
-//   // compute odometric instantaneouse velocity
-
-//   v = delta_s / step_time;
-//   w = delta_theta / step_time;
-
-//   odom_vel[0] = v;
-//   odom_vel[1] = 0.0;
-//   odom_vel[2] = w;
-
-//   last_velocity[LEFT] = wheel_l / step_time;
-//   last_velocity[RIGHT] = wheel_r / step_time;
-//   last_theta = theta;
-
-//   return true;
-// }
-
 /*******************************************************************************
 * Send log message
 *******************************************************************************/
@@ -601,45 +543,4 @@ void sendDebuglog(void)
   DEBUG_SERIAL.print(motor_l);
   DEBUG_SERIAL.print("  motor_l [rpm] : ");
   DEBUG_SERIAL.println(motor_r);
-
-  // DEBUG_SERIAL.println("---------------------------------------");
-  // DEBUG_SERIAL.println("EXTERNAL SENSORS");
-  // DEBUG_SERIAL.println("---------------------------------------");
-  // DEBUG_SERIAL.print("Bumper : "); DEBUG_SERIAL.println(sensors.checkPushBumper());
-  // DEBUG_SERIAL.print("Cliff : "); DEBUG_SERIAL.println(sensors.getIRsensorData());
-  // DEBUG_SERIAL.print("Sonar : "); DEBUG_SERIAL.println(sensors.getSonarData());
-  // DEBUG_SERIAL.print("Illumination : "); DEBUG_SERIAL.println(sensors.getIlluminationData());
-
-  // DEBUG_SERIAL.println("---------------------------------------");
-  // DEBUG_SERIAL.println("OpenCR SENSORS");
-  // DEBUG_SERIAL.println("---------------------------------------");
-  // DEBUG_SERIAL.print("Battery : "); DEBUG_SERIAL.println(sensors.checkVoltage());
-  // DEBUG_SERIAL.println("Button : " + String(sensors.checkPushButton()));
-
-  // float* quat = sensors.getOrientation();
-
-  // DEBUG_SERIAL.println("IMU : ");
-  // DEBUG_SERIAL.print("    w : "); DEBUG_SERIAL.println(quat[0]);
-  // DEBUG_SERIAL.print("    x : "); DEBUG_SERIAL.println(quat[1]);
-  // DEBUG_SERIAL.print("    y : "); DEBUG_SERIAL.println(quat[2]);
-  // DEBUG_SERIAL.print("    z : "); DEBUG_SERIAL.println(quat[3]);
-
-  // DEBUG_SERIAL.println("---------------------------------------");
-  // DEBUG_SERIAL.println("DYNAMIXELS");
-  // DEBUG_SERIAL.println("---------------------------------------");
-  // DEBUG_SERIAL.println("Torque : " + String(motor_driver.getTorque()));
-
-  // int32_t encoder[WHEEL_NUM] = {0, 0};
-  // motor_driver.readEncoder(encoder[LEFT], encoder[RIGHT]);
-
-  // DEBUG_SERIAL.println("Encoder(left) : " + String(encoder[LEFT]));
-  // DEBUG_SERIAL.println("Encoder(right) : " + String(encoder[RIGHT]));
-
-  // DEBUG_SERIAL.println("---------------------------------------");
-  // DEBUG_SERIAL.println("TurtleBot3");
-  // DEBUG_SERIAL.println("---------------------------------------");
-  // DEBUG_SERIAL.println("Odometry : ");
-  // DEBUG_SERIAL.print("         x : "); DEBUG_SERIAL.println(odom_pose[0]);
-  // DEBUG_SERIAL.print("         y : "); DEBUG_SERIAL.println(odom_pose[1]);
-  // DEBUG_SERIAL.print("     theta : "); DEBUG_SERIAL.println(odom_pose[2]);
 }
